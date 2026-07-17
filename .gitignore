@@ -1,0 +1,32 @@
+# Porquim - Git Ignore
+
+# Chaves de API (NUNCA versionar)
+config.js
+
+# Dependências
+node_modules/
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Build
+dist/
+build/
+
+# Temporários
+.tmp/

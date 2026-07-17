@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Porcada - Sistema de Gestão Financeira Pessoal">
+    <title>Porcada - Gestão Financeira</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <span class="logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.4-11-.3-11 5 0 4.2 2.8 8 7 8 1.5 0 3-.5 4-1.5" />
+                    <path d="M2 9.1C1.6 8.7 1 7 1 7l3-1" />
+                    <path d="M22 9.1c.4-.4 1-2.1 1-2.1l-3-1" />
+                    <circle cx="15" cy="11" r="1" />
+                </svg></span>
+            <h1 class="logo-text">Porcada</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-btn active" data-view="dashboard" id="nav-dashboard">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="3" y="12" width="4" height="9" />
+                        <rect x="10" y="6" width="4" height="15" />
+                        <rect x="17" y="3" width="4" height="18" />
+                    </svg></span>
+                <span class="nav-label">Dashboard</span>
+            </button>
+            <button class="nav-btn" data-view="transacoes" id="nav-transacoes">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round">
+                        <polyline points="17 1 21 5 17 9" />
+                        <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+                        <polyline points="7 23 3 19 7 15" />
+                        <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+                    </svg></span>
+                <span class="nav-label">Transações</span>
+            </button>
+            <button class="nav-btn" data-view="recorrentes" id="nav-recorrentes">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg></span>
+                <span class="nav-label">Recorrentes</span>
+            </button>
+            <button class="nav-btn" data-view="metas" id="nav-metas">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                    </svg></span>
+                <span class="nav-label">Metas</span>
+            </button>
+            <button class="nav-btn" data-view="investimentos" id="nav-investimentos">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                        <polyline points="17 6 23 6 23 12" />
+                    </svg></span>
+                <span class="nav-label">Investimentos</span>
+            </button>
+            <button class="nav-btn" data-view="poupanca" id="nav-poupanca">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <path d="M3 9h18" />
+                        <path d="M9 21V9" />
+                    </svg></span>
+                <span class="nav-label">Poupança</span>
+            </button>
+            <button class="nav-btn" data-view="radar" id="nav-radar">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                        <path d="M12 12v9" />
+                    </svg></span>
+                <span class="nav-label">Radar de Mercado</span>
+            </button>
+            <button class="nav-btn" data-view="relatorios" id="nav-relatorios">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg></span>
+                <span class="nav-label">Relatórios</span>
+            </button>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="nav-btn" data-view="settings" id="btnSettingsToggle">
+                <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </svg></span>
+                <span class="nav-label">Configurações</span>
+            </button>
+            <button class="nav-btn" id="btnThemeToggle">
+                <span class="nav-icon" id="themeIcon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg></span>
+                <span class="nav-label" id="themeText">Light Mode</span>
+            </button>
+            <p class="version">v1.0.0</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg></button>
+
+            <div class="topbar-left">
+                <span class="greeting" id="greeting">Boa tarde</span>
+                <div class="month-selector"
+                    style="display: flex; align-items: center; gap: 6px; background: var(--surface-2); padding: 4px 8px; border-radius: 100px; border: 1px solid var(--border);">
+                    <button id="prevMonth" class="btn-icon"
+                        style="padding: 4px; border-radius: 50%; width: 26px; height: 26px;">&#60;</button>
+                    <span id="currentMonthLabel"
+                        style="font-size: 12px; font-weight: 600; color: var(--lighter-gray); min-width: 100px; text-align: center; letter-spacing: 0.3px;">Junho
+                        2026</span>
+                    <button id="nextMonth" class="btn-icon"
+                        style="padding: 4px; border-radius: 50%; width: 26px; height: 26px;">&#62;</button>
+                </div>
+            </div>
+
+            <div class="topbar-center">
+                <div class="ticker-wrap" id="marketTicker">Atualizando mercado...</div>
+            </div>
+
+            <div class="topbar-right">
+                <button type="button" class="btn-icon" id="btnPrivacyToggle" title="Ocultar valores">
+                    <svg id="icon-eye" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                </button>
+                <button type="button" class="btn-primary" id="btnNovaTransacao">+ Nova Transação</button>
+            </div>
+        </header>
+
+        <!-- Dashboard View -->
+        <section class="view active" id="view-dashboard">
+            <!-- Alerta de Contas a Vencer -->
+            <div id="recorrentesAlert" style="display: none; margin-bottom: 20px; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--negative); padding: 15px; border-radius: var(--radius);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--negative)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <strong style="color: var(--negative);">Atenção: Contas Próximas ao Vencimento</strong>
+                </div>
+                <div id="recorrentesAlertList" style="margin-left: 30px; font-size: 14px;">
+                </div>
+            </div>
+
+            <!-- Meta de Economia Progress -->
+            <div id="metaEconomiaContainer" style="display: none; margin-bottom: 20px; background: var(--surface-2); border: 1px solid var(--border); padding: 15px; border-radius: var(--radius);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <strong style="color: var(--white); font-size: 14px;">Meta de Economia Mensal</strong>
+                    <span id="metaEconomiaText" style="font-size: 14px; color: var(--light-gray);">R$ 0,00 / R$ 0,00</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: var(--surface-1); border-radius: 4px; overflow: hidden;">
+                    <div id="metaEconomiaBar" style="height: 100%; width: 0%; background: var(--white); transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="cards-grid">
+                <div class="card card-balance" id="card-saldo">
+                    <div class="card-header">
+                        <span class="card-label">Saldo Atual</span>
+                        <span class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <rect x="2" y="6" width="20" height="12" rx="2" />
+                                <circle cx="12" cy="12" r="2" />
+                                <path d="M6 12h.01M18 12h.01" />
+                            </svg></span>
+                    </div>
+                    <div class="card-value" id="saldoAtual">R$ 0,00</div>
+                    <div class="card-sub" id="saldoSub">Somente transações confirmadas</div>
+                </div>
+                <div class="card card-income">
+                    <div class="card-header">
+                        <span class="card-label">Receitas (mês)</span>
+                        <span class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <line x1="12" y1="19" x2="12" y2="5" />
+                                <polyline points="5 12 12 5 19 12" />
+                            </svg></span>
+                    </div>
+                    <div class="card-value positive" id="receitaMes">R$ 0,00</div>
+                    <div class="card-sub" id="receitaCount">0 entradas</div>
+                </div>
+                <div class="card card-expense">
+                    <div class="card-header">
+                        <span class="card-label">Despesas (mês)</span>
+                        <span class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <polyline points="19 12 12 19 5 12" />
+                            </svg></span>
+                    </div>
+                    <div class="card-value negative" id="despesaMes">R$ 0,00</div>
+                    <div class="card-sub" id="despesaCount">0 saídas</div>
+                </div>
+                <div class="card card-savings">
+                    <div class="card-header">
+                        <span class="card-label">Guardado</span>
+                        <span class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16" />
+                                <path d="M3 21h18" />
+                                <path d="M9 7h6" />
+                                <path d="M9 11h6" />
+                                <path d="M10 15h4v6h-4z" />
+                            </svg></span>
+                    </div>
+                    <div class="card-value" id="totalGuardado">R$ 0,00</div>
+                    <div class="card-sub">Total poupado</div>
+                </div>
+                <div class="card card-invest">
+                    <div class="card-header">
+                        <span class="card-label">Investido</span>
+                        <span class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                <polyline points="17 6 23 6 23 12" />
+                            </svg></span>
+                    </div>
+                    <div class="card-value" id="totalInvestido">R$ 0,00</div>
+                    <div class="card-sub" id="investCount">0 investimentos</div>
+                </div>
+                <div class="card card-patrimony">
+                    <div class="card-header">
+                        <span class="card-label">Patrimônio Total</span>
+                        <span class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <path d="M3 21h18" />
+                                <path d="M5 21V7l7-4 7 4v14" />
+                                <path d="M9 21v-6h6v6" />
+                            </svg></span>
+                    </div>
+                    <div class="card-value" id="patrimonioTotal">R$ 0,00</div>
+                    <div class="card-sub">Saldo + Guardado + Investido</div>
+                </div>
+            </div>
+
+            <!-- Pending Bar -->
+            <div class="pending-bar" id="pendingBar" style="display:none">
+                <div class="pending-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>Agendado a receber: <strong id="pendReceita">R$ 0,00</strong></span>
+                </div>
+                <div class="pending-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>Agendado a pagar: <strong id="pendDespesa">R$ 0,00</strong></span>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <h3 class="chart-title">Fluxo Mensal (últimos 6 meses)</h3>
+                    <div style="position: relative; height: 280px; width: 100%;">
+                        <canvas id="chartFluxo"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Despesas por Categoria</h3>
+                    <div style="position: relative; height: 280px; width: 100%;">
+                        <canvas id="chartCategorias" width="350" height="280"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3>Últimas Transações</h3>
+                    <button class="btn-link" data-view="transacoes">Ver todas →</button>
+                </div>
+                <div class="transactions-list" id="recentTransactions">
+                    <div class="empty-state">
+                        <p>Nenhuma transação registrada ainda.</p>
+                        <p class="empty-hint">Clique em "+ Nova Transação" para começar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recorrentes View -->
+        <section class="view" id="view-recorrentes">
+            <div class="view-header">
+                <h2>Transações Recorrentes</h2>
+                <button class="btn-primary" id="btnNovoRecorrente">+ Nova Recorrente</button>
+            </div>
+
+            <div class="info-banner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                <span>Defina aqui suas entradas e saídas fixas (salário, aluguel, contas). Use o botão "Registrar" para
+                    lançar a transação quando ela acontecer de fato.</span>
+            </div>
+
+            <div class="mini-cards">
+                <div class="mini-card">
+                    <span class="mini-label">Receitas Fixas</span>
+                    <span class="mini-value" id="recFixaReceita">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Despesas Fixas</span>
+                    <span class="mini-value" id="recFixaDespesa">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Balanço Fixo Mensal</span>
+                    <span class="mini-value" id="recFixaBalanco">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <table class="data-table" id="tabelaRecorrentes">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
+                            <th>Categoria</th>
+                            <th>Valor</th>
+                            <th>Dia do Mês</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recorrentesBody">
+                    </tbody>
+                </table>
+                <div class="empty-state" id="recorrentesEmpty">
+                    <p>Nenhuma transação recorrente cadastrada.</p>
+                    <p class="empty-hint">Cadastre seu salário, aluguel e contas fixas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transações View -->
+        <section class="view" id="view-transacoes">
+            <div class="view-header">
+                <h2>Transações</h2>
+            </div>
+
+            <!-- Magic AI Input Bar -->
+            <div class="magic-input-bar">
+                <span class="magic-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </span>
+                <input type="text" id="magicInput"
+                    placeholder="Adicionar com IA — Ex: Gastei 150 no Carrefour e recebi 5000 de salário"
+                    autocomplete="off">
+                <button class="btn-send" id="btnMagicSubmit">Enviar</button>
+            </div>
+
+            <!-- Toolbar: Filters + Actions -->
+            <div class="transacoes-toolbar">
+                <div class="transacoes-toolbar-left">
+                    <label class="toggle-all-months" title="Ver transações de todos os meses">
+                        <input type="checkbox" id="filterAllMonths">
+                        <span class="toggle-label">Todos os meses</span>
+                    </label>
+                    <input type="text" id="filterText" class="input-field" placeholder="Buscar descrição..."
+                        style="width: 180px;" autocomplete="off">
+                    <select id="filterTipo" class="select-field">
+                        <option value="todos">Todos</option>
+                        <option value="receita">Receitas</option>
+                        <option value="despesa">Despesas</option>
+                    </select>
+                    <select id="filterCategoria" class="select-field">
+                        <option value="todos">Todas categorias</option>
+                    </select>
+                </div>
+                <div class="transacoes-toolbar-right">
+                    <!-- Clear All Button -->
+                    <button class="btn-danger-outline" id="btnLimparTransacoes" title="Excluir todas as transações e zerar o saldo">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round"
+                            style="vertical-align: middle; margin-right: 4px;">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                        Limpar tudo
+                    </button>
+                    <!-- Export Dropdown -->
+                    <div class="export-dropdown-wrap" id="exportDropdownWrap">
+                        <button class="btn-secondary" id="btnExportToggle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round"
+                                style="vertical-align: middle; margin-right: 4px;">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            Exportar
+                        </button>
+                        <div class="export-dropdown" id="exportDropdown">
+                            <button class="export-dropdown-item" id="btnExportCSV">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                </svg>
+                                Exportar CSV
+                            </button>
+                            <div class="export-dropdown-divider"></div>
+                            <button class="export-dropdown-item" id="btnExportPDF">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <path d="M9 13h2m-2 4h6" />
+                                </svg>
+                                Exportar PDF
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn-primary" id="btnNovaTransacao2">+ Nova Transação</button>
+                </div>
+            </div>
+
+            <!-- Transaction Summary -->
+            <div class="mini-cards">
+                <div class="mini-card">
+                    <span class="mini-label">Total Receitas</span>
+                    <span class="mini-value positive" id="filtroReceita">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Total Despesas</span>
+                    <span class="mini-value negative" id="filtroDespesa">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Balanço</span>
+                    <span class="mini-value" id="filtroBalanco">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <table class="data-table" id="tabelaTransacoes">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transacoesBody">
+                    </tbody>
+                </table>
+                <div class="empty-state" id="transacoesEmpty">
+                    <p>Nenhuma transação encontrada.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investimentos View -->
+        <section class="view" id="view-investimentos">
+            <div class="view-header">
+                <h2>Investimentos</h2>
+                <button class="btn-primary" id="btnNovoInvestimento">+ Novo Investimento</button>
+            </div>
+
+            <div class="mini-cards">
+                <div class="mini-card">
+                    <span class="mini-label">Total Investido</span>
+                    <span class="mini-value" id="invTotalAplicado">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Rendimento Estimado</span>
+                    <span class="mini-value positive" id="invRendimento">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Total Ativos</span>
+                    <span class="mini-value" id="invAtivos">0</span>
+                </div>
+            </div>
+
+            <!-- Market Dashboard (Chart + Top List) -->
+            <div class="market-dashboard">
+                <div class="market-chart-container">
+                    <div class="market-chart-header">
+                        <div class="market-info">
+                            <h3 id="marketTitle">IBOVESPA <span class="badge" style="font-size:10px;">^BVSP</span></h3>
+                            <div class="market-price">
+                                <span id="marketPrice">120.000,00</span>
+                                <span id="marketChange" class="positive">+0.00%</span>
+                            </div>
+                        </div>
+                        <div class="market-filters">
+                            <button class="market-filter active" data-range="1d">1D</button>
+                            <button class="market-filter" data-range="5d">5D</button>
+                            <button class="market-filter" data-range="1mo">1M</button>
+                            <button class="market-filter" data-range="1y">1A</button>
+                        </div>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                </div>
+                <div class="market-sidebar">
+                    <div class="market-sidebar-header">
+                        <button class="market-tab active">Maiores Altas</button>
+                    </div>
+                    <div class="market-list" id="marketList">
+                        <!-- Top stocks will be injected here -->
+                        <div class="market-item-skeleton"></div>
+                        <div class="market-item-skeleton"></div>
+                        <div class="market-item-skeleton"></div>
+                        <div class="market-item-skeleton"></div>
+                        <div class="market-item-skeleton"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <table class="data-table" id="tabelaInvestimentos">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Ticker</th>
+                            <th>Tipo</th>
+                            <th>Valor Aplicado</th>
+                            <th>Data</th>
+                            <th>Rend. / Cotação</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="investimentosBody">
+                    </tbody>
+                </table>
+                <div class="empty-state" id="investimentosEmpty">
+                    <p>Nenhum investimento registrado.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Poupança View -->
+        <section class="view" id="view-poupanca">
+            <div class="view-header">
+                <h2>Poupança / Reservas</h2>
+                <button class="btn-primary" id="btnNovaPoupanca">+ Nova Reserva</button>
+            </div>
+
+            <div class="mini-cards">
+                <div class="mini-card">
+                    <span class="mini-label">Total Guardado</span>
+                    <span class="mini-value" id="poupTotal">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Meta Total</span>
+                    <span class="mini-value" id="poupMeta">R$ 0,00</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Progresso Geral</span>
+                    <span class="mini-value" id="poupProgresso">0%</span>
+                </div>
+                <div class="mini-card">
+                    <span class="mini-label">Proj. Mensal (100% CDI)</span>
+                    <span class="mini-value positive" id="poupRendimento">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="savings-grid" id="savingsGrid">
+                <div class="empty-state">
+                    <p>Nenhuma reserva criada ainda.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metas View -->
+        <section class="view" id="view-metas">
+            <div class="view-header">
+                <h2>Metas de Gastos (Budget)</h2>
+                <button class="btn-primary" id="btnNovaMeta">+ Nova Meta</button>
+            </div>
+
+            <div class="info-banner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                As barras de progresso comparam as suas metas mensais com as despesas cadastradas no mês atual.
+            </div>
+
+            <div class="savings-grid" id="metasGrid">
+                <!-- Preenchido via JS -->
+            </div>
+            <div class="empty-state" id="metasEmpty" style="display:none;">
+                <p>Nenhuma meta configurada.</p>
+                <p class="empty-hint">Clique em "+ Nova Meta" para começar a controlar seus gastos.</p>
+            </div>
+        </section>
+
+        <!-- Radar View -->
+        <section class="view" id="view-radar">
+            <div class="view-header">
+                <h2>Radar de Mercado</h2>
+            </div>
+
+            <div class="info-banner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                Principais notícias financeiras do momento, direto do InfoMoney.
+            </div>
+
+            <div class="savings-grid" id="radarGrid">
+                <div class="empty-state">
+                    <p>Buscando notícias no mercado...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Relatórios View -->
+        <section class="view" id="view-relatorios">
+            <div class="view-header">
+                <h2>Relatórios</h2>
+                <div class="view-actions">
+                    <select id="reportPeriod" class="select-field">
+                        <option value="mes">Este Mês</option>
+                        <option value="trimestre">Último Trimestre</option>
+                        <option value="semestre">Último Semestre</option>
+                        <option value="ano">Este Ano</option>
+                        <option value="tudo">Tudo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="report-grid">
+                <div class="report-card">
+                    <h3>Resumo do Período</h3>
+                    <div class="report-data" id="reportResumo">
+                        <div class="report-row">
+                            <span>Receitas</span>
+                            <span class="positive" id="rpReceita">R$ 0,00</span>
+                        </div>
+                        <div class="report-row">
+                            <span>Despesas</span>
+                            <span class="negative" id="rpDespesa">R$ 0,00</span>
+                        </div>
+                        <div class="report-row report-row-total">
+                            <span>Balanço</span>
+                            <span id="rpBalanco">R$ 0,00</span>
+                        </div>
+                        <div class="report-row">
+                            <span>Média de Gastos/dia</span>
+                            <span id="rpMediaDia">R$ 0,00</span>
+                        </div>
+                        <div class="report-row">
+                            <span>Maior Despesa</span>
+                            <span id="rpMaiorDespesa">-</span>
+                        </div>
+                        <div class="report-row">
+                            <span>Maior Receita</span>
+                            <span id="rpMaiorReceita">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-card">
+                    <h3>Top Categorias de Gasto</h3>
+                    <div class="report-data" id="reportCategorias">
+                        <p class="empty-hint">Sem dados ainda.</p>
+                    </div>
+                </div>
+                <div class="report-card full-width">
+                    <h3>Evolução Patrimonial</h3>
+                    <canvas id="chartPatrimonio" width="900" height="300"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Configurações -->
+        <section class="view" id="view-settings">
+            <div class="settings-page">
+                <div class="settings-page-header">
+                    <h2>Configurações</h2>
+                    <p>Gerencie suas preferências, formato de dados e aparência do app.</p>
+                </div>
+
+                <form id="formSettings" class="settings-form">
+
+                    <!-- ─── Perfil ─── -->
+                    <div class="settings-section">
+                        <div class="settings-section-title">
+                            <span class="settings-section-icon">👤</span>
+                            <h3>Perfil</h3>
+                        </div>
+                        <div class="settings-group">
+                            <div class="s-row">
+                                <div class="s-label">
+                                    <span class="s-title">Seu Nome</span>
+                                    <span class="s-desc">Aparece na saudação do topo (ex: Bom dia, João)</span>
+                                </div>
+                                <div class="s-field s-field--md">
+                                    <input type="text" id="settingsNome" class="input-field" placeholder="Ex: João">
+                                </div>
+                            </div>
+                            <div class="s-row">
+                                <div class="s-label">
+                                    <span class="s-title">Email da Conta</span>
+                                </div>
+                                <div class="s-field s-field--md">
+                                    <input type="text" id="settingsEmail" class="input-field" disabled value="Carregando...">
+                                </div>
+                            </div>
+                            <div class="s-row s-row--last">
+                                <div class="s-label">
+                                    <span class="s-title">Sessão</span>
+                                    <span class="s-desc">Desconecte sua conta deste dispositivo.</span>
+                                </div>
+                                <div class="s-field s-field--auto">
+                                    <button type="button" class="btn-danger-outline btn-sm" id="btnSettingsLogout">Sair da Conta</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Financeiro ─── -->
+                    <div class="settings-section">
+                        <div class="settings-section-title">
+                            <span class="settings-section-icon">💰</span>
+                            <h3>Financeiro</h3>
+                        </div>
+                        <div class="settings-group">
+                            <div class="s-row">
+                                <div class="s-label">
+                                    <span class="s-title">Saldo Inicial (R$)</span>
+                                    <span class="s-desc">Valor que você já tinha antes de usar o app.</span>
+                                </div>
+                                <div class="s-field s-field--sm">
+                                    <input type="number" id="settingsSaldoInicial" class="input-field" step="0.01" placeholder="0,00">
+                                </div>
+                            </div>
+                            <div class="s-row">
+                                <div class="s-label">
+                                    <span class="s-title">Dia de Fechamento</span>
+                                    <span class="s-desc">Define quando seu 'mês financeiro' começa.</span>
+                                </div>
+                                <div class="s-field s-field--xs">
+                                    <select id="settingsDiaFechamento" class="select-field">
+                                        <option value="1">Dia 1</option>
+                                        <option value="5">Dia 5</option>
+                                        <option value="10">Dia 10</option>
+                                        <option value="15">Dia 15</option>
+                                        <option value="20">Dia 20</option>
+                                        <option value="25">Dia 25</option>
+                                        <option value="28">Dia 28</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="s-row s-row--last">
+                                <div class="s-label">
+                                    <span class="s-title">Meta de Economia Mensal (R$)</span>
+                                    <span class="s-desc">Quanto quer economizar por mês. Exibe uma barra no Dashboard.</span>
+                                </div>
+                                <div class="s-field s-field--sm">
+                                    <input type="number" id="settingsMetaEconomia" class="input-field" step="0.01" placeholder="0,00">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Notificações e Preferências ─── -->
+                    <div class="settings-section">
+                        <div class="settings-section-title">
+                            <span class="settings-section-icon">🔔</span>
+                            <h3>Notificações e Preferências</h3>
+                        </div>
+                        <div class="settings-group">
+                            <div class="s-row">
+                                <div class="s-label">
+                                    <span class="s-title">Avisar recorrentes</span>
+                                    <span class="s-desc">Quantos dias antes do vencimento o alerta aparece.</span>
+                                </div>
+                                <div class="s-field s-field--xs">
+                                    <input type="number" id="settingsAlertDays" class="input-field" min="1" max="15" value="5">
+                                </div>
+                            </div>
+                            <div class="s-row">
+                                <div class="s-label">
+                                    <span class="s-title">Formato de Data</span>
+                                    <span class="s-desc">Como as datas são exibidas. <span id="settingsDatePreview" class="preview-text"></span></span>
+                                </div>
+                                <div class="s-field s-field--xs">
+                                    <select id="settingsDateFormat" class="select-field">
+                                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="s-row s-row--last s-row--col">
+                                <div class="s-label">
+                                    <span class="s-title">Ocultar seções do Dashboard</span>
+                                    <span class="s-desc">Esconda seções que você não utiliza para uma visão mais limpa.</span>
+                                </div>
+                                <div class="s-toggles">
+                                    <label class="s-toggle">
+                                        <input type="checkbox" id="hideInvestimentos" class="toggle-switch">
+                                        <span class="slider"></span>
+                                        <span>Investimentos</span>
+                                    </label>
+                                    <label class="s-toggle">
+                                        <input type="checkbox" id="hidePoupanca" class="toggle-switch">
+                                        <span class="slider"></span>
+                                        <span>Poupanças</span>
+                                    </label>
+                                    <label class="s-toggle">
+                                        <input type="checkbox" id="hideRadar" class="toggle-switch">
+                                        <span class="slider"></span>
+                                        <span>Radar</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Categorias Personalizadas ─── -->
+                    <div class="settings-section">
+                        <div class="settings-section-title">
+                            <span class="settings-section-icon">🏷️</span>
+                            <h3>Categorias Personalizadas</h3>
+                        </div>
+                        <div class="settings-group">
+                            <div class="s-row s-row--col">
+                                <div class="s-label">
+                                    <span class="s-title">Categorias de Receita</span>
+                                </div>
+                                <div class="s-cat-row">
+                                    <input type="text" id="newCatReceitaInput" class="input-field" placeholder="Nova categoria de receita">
+                                    <button type="button" class="btn-accent-sm" id="btnAddCatReceita">+</button>
+                                </div>
+                                <div id="listCatReceita" class="tag-list"></div>
+                            </div>
+                            <div class="s-row s-row--last s-row--col">
+                                <div class="s-label">
+                                    <span class="s-title">Categorias de Despesa</span>
+                                </div>
+                                <div class="s-cat-row">
+                                    <input type="text" id="newCatDespesaInput" class="input-field" placeholder="Nova categoria de despesa">
+                                    <button type="button" class="btn-accent-sm" id="btnAddCatDespesa">+</button>
+                                </div>
+                                <div id="listCatDespesa" class="tag-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Aparência ─── -->
+                    <div class="settings-section">
+                        <div class="settings-section-title">
+                            <span class="settings-section-icon">🎨</span>
+                            <h3>Aparência</h3>
+                        </div>
+                        <div class="settings-group">
+                            <div class="s-row s-row--last">
+                                <div class="s-label">
+                                    <span class="s-title">Cor de Acento</span>
+                                    <span class="s-desc">Muda a cor principal dos botões e destaques.</span>
+                                </div>
+                                <div class="s-field s-field--auto">
+                                    <div class="color-swatches" id="colorSwatchesContainer">
+                                        <button type="button" class="color-swatch active" data-color="#40C4FF" style="--swatch-color: #40C4FF;" title="Azul (Padrão)"></button>
+                                        <button type="button" class="color-swatch" data-color="#4CAF50" style="--swatch-color: #4CAF50;" title="Verde"></button>
+                                        <button type="button" class="color-swatch" data-color="#FF6B6B" style="--swatch-color: #FF6B6B;" title="Coral"></button>
+                                        <button type="button" class="color-swatch" data-color="#A78BFA" style="--swatch-color: #A78BFA;" title="Roxo"></button>
+                                        <button type="button" class="color-swatch" data-color="#F59E0B" style="--swatch-color: #F59E0B;" title="Âmbar"></button>
+                                        <button type="button" class="color-swatch" data-color="#14B8A6" style="--swatch-color: #14B8A6;" title="Teal"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Atalhos de Teclado ─── -->
+                    <div class="settings-section">
+                        <div class="settings-section-title">
+                            <span class="settings-section-icon">⌨️</span>
+                            <h3>Atalhos de Teclado</h3>
+                        </div>
+                        <div class="settings-group">
+                            <div class="s-row">
+                                <div class="s-label">
+                                    <span class="s-title">Habilitar atalhos globais</span>
+                                    <span class="s-desc">Permite usar o teclado para navegar rapidamente pelo app.</span>
+                                </div>
+                                <div class="s-field s-field--auto">
+                                    <label class="s-toggle" style="padding:0; background:none; border:none;">
+                                        <input type="checkbox" id="settingsEnableShortcuts" class="toggle-switch" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="s-row s-row--last s-row--col">
+                                <div class="s-shortcuts">
+                                    <table class="shortcuts-table">
+                                        <tr><td><kbd>N</kbd></td><td>Nova Transação</td></tr>
+                                        <tr><td><kbd>D</kbd></td><td>Dashboard</td></tr>
+                                        <tr><td><kbd>T</kbd></td><td>Transações</td></tr>
+                                        <tr><td><kbd>R</kbd></td><td>Recorrentes</td></tr>
+                                        <tr><td><kbd>I</kbd></td><td>Investimentos</td></tr>
+                                        <tr><td><kbd>S</kbd></td><td>Configurações</td></tr>
+                                        <tr><td><kbd>Esc</kbd></td><td>Fechar Modal</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Dados e Sistema ─── -->
+                    <div class="settings-section">
+                        <div class="settings-section-title">
+                            <span class="settings-section-icon">💾</span>
+                            <h3>Dados e Sistema</h3>
+                        </div>
+                        <div class="settings-group">
+                            <div class="s-row s-row--last">
+                                <div class="s-data-actions">
+                                    <button type="button" class="btn-secondary" id="btnExportJson">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                        Exportar Backup
+                                    </button>
+                                    <label class="btn-secondary settings-import-btn">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        Importar JSON
+                                        <input type="file" id="btnImportJson" accept=".json" style="display:none;">
+                                    </label>
+                                    <button type="button" class="btn-danger-outline btn-sm" id="btnClearCache">Limpar Cache</button>
+                                </div>
+                                <div class="s-version">
+                                    Porquim v1.1.0 — Modificado com IA.<br>
+                                    ✅ Chaves de API protegidas via Edge Functions.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sticky Save Bar -->
+                    <div class="settings-save-bar">
+                        <button type="submit" class="btn-primary btn-save-settings" id="btnSaveSettingsSubmit">
+                            <span class="save-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                            </span>
+                            <span class="save-text">Salvar Configurações</span>
+                            <span class="badge-pending" id="badgePendingSettings" style="display: none;">● Pendente</span>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal: Nova Transação -->
+    <div class="modal-overlay" id="modalTransacao">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTransacaoTitle">Nova Transação</h3>
+                <button class="modal-close" id="closeModalTransacao">✕</button>
+            </div>
+            <form id="formTransacao">
+                <input type="hidden" id="transacaoId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transacaoTipo">Tipo</label>
+                        <select id="transacaoTipo" class="select-field" required>
+                            <option value="receita">Receita</option>
+                            <option value="despesa">Despesa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacaoValor">Valor (R$)</label>
+                        <input type="number" id="transacaoValor" class="input-field" step="0.01" min="0.01" required
+                            placeholder="0,00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="transacaoDescricao">Descrição</label>
+                    <input type="text" id="transacaoDescricao" class="input-field" required
+                        placeholder="Ex: Salário, Aluguel, Mercado...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transacaoCategoria">Categoria</label>
+                        <select id="transacaoCategoria" class="select-field" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacaoData">Data</label>
+                        <input type="date" id="transacaoData" class="input-field" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="transacaoNota">Observação (opcional)</label>
+                    <textarea id="transacaoNota" class="input-field textarea-field" rows="2"
+                        placeholder="Nota adicional..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelTransacao">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Novo Investimento -->
+    <div class="modal-overlay" id="modalInvestimento">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalInvestimentoTitle">Novo Investimento</h3>
+                <button class="modal-close" id="closeModalInvestimento">✕</button>
+            </div>
+            <form id="formInvestimento">
+                <input type="hidden" id="investimentoId">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="investimentoNome">Nome</label>
+                        <input type="text" id="investimentoNome" class="input-field" required
+                            placeholder="Ex: Tesouro Selic, CDB Banco X...">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="investimentoTicker">Ticker B3 (opcional)</label>
+                        <input type="text" id="investimentoTicker" class="input-field"
+                            placeholder="Ex: PETR4, MXRF11..." style="text-transform: uppercase;">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="investimentoTipo">Tipo</label>
+                        <select id="investimentoTipo" class="select-field" required>
+                            <option value="Renda Fixa">Renda Fixa</option>
+                            <option value="Renda Variável">Renda Variável</option>
+                            <option value="Tesouro Direto">Tesouro Direto</option>
+                            <option value="CDB">CDB</option>
+                            <option value="Ações">Ações</option>
+                            <option value="FIIs">FIIs</option>
+                            <option value="Crypto">Crypto</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="investimentoValor">Valor Aplicado (R$)</label>
+                        <input type="number" id="investimentoValor" class="input-field" step="0.01" min="0.01" required
+                            placeholder="0,00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="investimentoData">Data da Aplicação</label>
+                        <input type="date" id="investimentoData" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="investimentoRendimento">Rendimento Anual (%)</label>
+                        <input type="number" id="investimentoRendimento" class="input-field" step="0.01" min="0"
+                            placeholder="12.5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="investimentoNota">Observação (opcional)</label>
+                    <textarea id="investimentoNota" class="input-field textarea-field" rows="2"
+                        placeholder="Nota adicional..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelInvestimento">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Nova Poupança/Reserva -->
+    <div class="modal-overlay" id="modalPoupanca">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalPoupancaTitle">Nova Reserva</h3>
+                <button class="modal-close" id="closeModalPoupanca">✕</button>
+            </div>
+            <form id="formPoupanca">
+                <input type="hidden" id="poupancaId">
+                <div class="form-group">
+                    <label for="poupancaNome">Nome da Reserva</label>
+                    <input type="text" id="poupancaNome" class="input-field" required
+                        placeholder="Ex: Reserva de Emergência, Viagem...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="poupancaMeta">Meta (R$)</label>
+                        <input type="number" id="poupancaMeta" class="input-field" step="0.01" min="0" required
+                            placeholder="10000,00">
+                    </div>
+                    <div class="form-group">
+                        <label for="poupancaAtual">Valor Atual (R$)</label>
+                        <input type="number" id="poupancaAtual" class="input-field" step="0.01" min="0" required
+                            placeholder="0,00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="poupancaCor">Ícone</label>
+                    <select id="poupancaCor" class="select-field">
+                        <option value="meta">○ Meta</option>
+                        <option value="casa">□ Casa</option>
+                        <option value="carro">◇ Carro</option>
+                        <option value="viagem">△ Viagem</option>
+                        <option value="educacao">◎ Educação</option>
+                        <option value="emergencia">⬡ Emergência</option>
+                        <option value="especial">☆ Especial</option>
+                        <option value="geral">● Geral</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelPoupanca">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Adicionar valor à Poupança -->
+    <div class="modal-overlay" id="modalAddPoupanca">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h3>Adicionar / Retirar Valor</h3>
+                <button class="modal-close" id="closeModalAddPoupanca">✕</button>
+            </div>
+            <form id="formAddPoupanca">
+                <input type="hidden" id="addPoupancaId">
+                <div class="form-group">
+                    <label for="addPoupancaValor">Valor (R$)</label>
+                    <input type="number" id="addPoupancaValor" class="input-field" step="0.01" required
+                        placeholder="Use negativo para retirar">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelAddPoupanca">Cancelar</button>
+                    <button type="submit" class="btn-primary">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Metas -->
+    <div class="modal-overlay" id="modalMeta">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalMetaTitle">Nova Meta</h3>
+                <button class="modal-close" id="closeModalMeta">✕</button>
+            </div>
+            <form id="formMeta">
+                <input type="hidden" id="metaId">
+                <div class="form-group">
+                    <label for="metaCategoria">Categoria</label>
+                    <select id="metaCategoria" class="select-field" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="metaValor">Limite Mensal (R$)</label>
+                    <input type="number" id="metaValor" class="input-field" step="0.01" min="0" placeholder="500,00"
+                        required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelMeta">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal-overlay" id="modalConfirm">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="closeModalConfirm">✕</button>
+            </div>
+            <p class="confirm-text" id="confirmText">Tem certeza que deseja excluir?</p>
+            <div class="form-actions">
+                <button class="btn-secondary" id="cancelConfirm">Cancelar</button>
+                <button class="btn-danger" id="confirmDelete">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Nova Recorrente -->
+    <div class="modal-overlay" id="modalRecorrente">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalRecorrenteTitle">Nova Transa&#231;&#227;o Recorrente</h3>
+                <button class="modal-close" id="closeModalRecorrente">&#10005;</button>
+            </div>
+            <form id="formRecorrente">
+                <input type="hidden" id="recorrenteId">
+                <div class="form-group">
+                    <label for="recorrenteDescricao">Descri&#231;&#227;o</label>
+                    <input type="text" id="recorrenteDescricao" class="input-field" required
+                        placeholder="Ex: Sal&#225;rio, Aluguel, Internet...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recorrenteTipo">Tipo</label>
+                        <select id="recorrenteTipo" class="select-field" required>
+                            <option value="receita">Receita</option>
+                            <option value="despesa">Despesa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recorrenteValor">Valor (R$)</label>
+                        <input type="number" id="recorrenteValor" class="input-field" step="0.01" min="0.01" required
+                            placeholder="0,00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recorrenteCategoria">Categoria</label>
+                        <select id="recorrenteCategoria" class="select-field" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recorrenteDia">Dia do M&#234;s</label>
+                        <input type="number" id="recorrenteDia" class="input-field" min="1" max="31" required
+                            placeholder="Ex: 5, 10, 30...">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelRecorrente">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Modal: Autenticação (Bloqueia o app se não logado) -->
+    <div class="modal-overlay auth-overlay" id="modalAuth" style="display: none; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(10px); z-index: 9999;">
+        <div class="modal auth-modal" style="text-align: center; max-width: 400px; border: 1px solid rgba(64,196,255,0.3); box-shadow: 0 0 30px rgba(64,196,255,0.1);">
+            <div class="auth-header" style="margin-bottom: 24px;">
+                <h2 style="color: #40C4FF; margin-bottom: 8px;">Bem-vindo ao Porquim</h2>
+                <p style="color: #888; font-size: 0.9rem;">Faça login ou crie sua conta para acessar suas finanças com segurança.</p>
+            </div>
+            <form id="formAuth">
+                <div class="form-group" style="text-align: left;">
+                    <label for="authEmail">E-mail</label>
+                    <input type="email" id="authEmail" class="input-field" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label for="authPassword">Senha</label>
+                    <input type="password" id="authPassword" class="input-field" placeholder="Mínimo 6 caracteres" required minlength="6">
+                </div>
+                <div id="authError" style="color: #FF5252; font-size: 0.85rem; margin-bottom: 15px; display: none;"></div>
+                <div class="form-actions" style="flex-direction: column; gap: 10px;">
+                    <button type="submit" class="btn-primary" id="btnAuthLogin" style="width: 100%; padding: 12px; font-size: 1rem;">Entrar</button>
+                    <button type="button" class="btn-secondary" id="btnAuthSignup" style="width: 100%; padding: 12px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.1);">Criar nova conta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Chatbot Financeiro IA -->
+    <style>
+/* Dashboard UI Upgrades */
+.card {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    will-change: transform;
+    background: linear-gradient(145deg, var(--surface-1) 0%, rgba(20,20,20,1) 100%);
+    border: 1px solid var(--border);
+}
+.card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.4), 0 0 15px rgba(255,255,255,0.03);
+    border-color: var(--border-accent);
+}
+.card-icon {
+    transition: filter 0.3s ease, color 0.3s ease;
+}
+.card-balance:hover .card-icon { color: #fff; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); }
+.card-income:hover .card-icon { color: #4CAF50; filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.5)); }
+.card-expense:hover .card-icon { color: #FF5252; filter: drop-shadow(0 0 8px rgba(255, 82, 82, 0.5)); }
+.card-savings:hover .card-icon { color: #2196F3; filter: drop-shadow(0 0 8px rgba(33, 150, 243, 0.5)); }
+.card-invest:hover .card-icon { color: #9C27B0; filter: drop-shadow(0 0 8px rgba(156, 39, 176, 0.5)); }
+.card-patrimony:hover .card-icon { color: #FFC107; filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.5)); }
+
+/* Floating Action Button (FAB) */
+.chat-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--border-accent);
+    background: var(--white);
+    color: var(--black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 40px rgba(255,255,255,0.06);
+    z-index: 9998;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.chat-fab:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.5), 0 0 50px rgba(255,255,255,0.1);
+}
+.chat-fab .chat-fab-close {
+    display: none;
+}
+.chat-fab.active .chat-fab-icon {
+    display: none;
+}
+.chat-fab.active .chat-fab-close {
+    display: block;
+}
+
+/* Pulse ring animation */
+.chat-fab::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    opacity: 0;
+    animation: chatFabPulse 3s ease-out infinite;
+}
+.chat-fab.active::before {
+    animation: none;
+    opacity: 0;
+}
+@keyframes chatFabPulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Chat Panel */
+.chat-panel {
+    position: fixed;
+    bottom: 100px;
+    right: 28px;
+    width: 400px;
+    height: 560px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.1);
+    z-index: 9997;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.chat-panel.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Chat Header */
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.chat-header-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.chat-header-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+    line-height: 1;
+}
+.chat-header-status {
+    font-size: 11px;
+    color: var(--positive);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+}
+.chat-header-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--positive);
+    display: inline-block;
+}
+.chat-header-close {
+    background: none;
+    border: none;
+    color: var(--light-gray);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.chat-header-close:hover {
+    background: var(--surface-3);
+    color: var(--white);
+}
+
+/* Chat Messages Area */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar {
+    width: 4px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--medium-gray);
+    border-radius: 4px;
+}
+
+/* Message Bubbles */
+.chat-msg {
+    display: flex;
+    gap: 10px;
+    max-width: 90%;
+    animation: chatMsgIn 0.3s ease;
+}
+@keyframes chatMsgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-msg.bot {
+    align-self: flex-start;
+}
+.chat-msg.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.chat-msg-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--surface-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--lighter-gray);
+    font-size: 12px;
+}
+.chat-msg.user .chat-msg-avatar {
+    background: var(--white);
+    color: var(--black);
+}
+
+.chat-msg-bubble {
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    word-break: break-word;
+}
+.chat-msg.bot .chat-msg-bubble {
+    background: var(--surface-3);
+    color: var(--near-white);
+    border-bottom-left-radius: 4px;
+}
+.chat-msg.user .chat-msg-bubble {
+    background: var(--white);
+    color: var(--black);
+    border-bottom-right-radius: 4px;
+}
+
+.chat-msg.bot .chat-msg-bubble h3,
+.chat-msg.bot .chat-msg-bubble h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 10px 0 6px 0;
+    color: var(--white);
+}
+.chat-msg.bot .chat-msg-bubble h3:first-child,
+.chat-msg.bot .chat-msg-bubble h4:first-child {
+    margin-top: 0;
+}
+.chat-msg.bot .chat-msg-bubble ul,
+.chat-msg.bot .chat-msg-bubble ol {
+    padding-left: 18px;
+    margin: 6px 0;
+}
+.chat-msg.bot .chat-msg-bubble li {
+    margin-bottom: 4px;
+}
+.chat-msg.bot .chat-msg-bubble strong {
+    color: var(--white);
+}
+.chat-msg.bot .chat-msg-bubble p {
+    margin: 6px 0;
+}
+.chat-msg.bot .chat-msg-bubble p:first-child {
+    margin-top: 0;
+}
+.chat-msg.bot .chat-msg-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+/* Typing Indicator */
+.chat-typing {
+    display: flex;
+    gap: 10px;
+    align-self: flex-start;
+    max-width: 90%;
+    animation: chatMsgIn 0.3s ease;
+}
+.chat-typing-dots {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 18px;
+    background: var(--surface-3);
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+}
+.chat-typing-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--lighter-gray);
+    animation: typingBounce 1.2s ease-in-out infinite;
+}
+.chat-typing-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+.chat-typing-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Quick Reply Chips */
+.chat-chips {
+    display: flex;
+    gap: 8px;
+    padding: 10px 18px;
+    overflow-x: auto;
+    flex-shrink: 0;
+    border-top: 1px solid var(--border);
+    background: var(--surface-1);
+    scrollbar-width: none;
+}
+.chat-chips::-webkit-scrollbar {
+    display: none;
+}
+.chat-chip {
+    white-space: nowrap;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: var(--surface-2);
+    color: var(--lighter-gray);
+    font-size: 12px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+.chat-chip:hover {
+    background: var(--surface-3);
+    color: var(--white);
+    border-color: var(--border-hover);
+}
+
+/* Chat Input Bar */
+.chat-input-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+    flex-shrink: 0;
+}
+.chat-input {
+    flex: 1;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-family: var(--font);
+    color: var(--near-white);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+.chat-input::placeholder {
+    color: var(--gray);
+}
+.chat-input:focus {
+    border-color: var(--border-accent);
+}
+.chat-send {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: var(--white);
+    color: var(--black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.chat-send:hover {
+    transform: scale(1.06);
+}
+.chat-send:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Welcome message */
+.chat-welcome {
+    text-align: center;
+    padding: 20px 10px 0 10px;
+}
+.chat-welcome-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--surface-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px auto;
+    color: var(--white);
+}
+.chat-welcome h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0 0 6px 0;
+}
+.chat-welcome p {
+    font-size: 12px;
+    color: var(--light-gray);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+    .chat-panel {
+        width: 100vw;
+        height: 100vh;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+    }
+    .chat-fab {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+    </style>
+    <button class="chat-fab" id="chatFab" title="Porcada">
+        <svg class="chat-fab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+        <svg class="chat-fab-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-header-avatar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="chat-header-title">Porcada</h4>
+                    <span class="chat-header-status" id="chatStatus">Online</span>
+                </div>
+            </div>
+            <button class="chat-header-close" id="chatClose" title="Fechar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages injected here by JS -->
+        </div>
+
+        <div class="chat-chips" id="chatChips">
+            <button class="chat-chip" data-prompt="Como estão meus gastos este mês?">💰 Meus gastos</button>
+            <button class="chat-chip" data-prompt="Faça uma análise completa da minha saúde financeira">📊 Saúde financeira</button>
+            <button class="chat-chip" data-prompt="Quais as tendências do Ibovespa e do mercado brasileiro atualmente?">📈 Análise de mercado</button>
+            <button class="chat-chip" data-prompt="Me dê dicas práticas para economizar mais">💡 Dicas para economizar</button>
+            <button class="chat-chip" data-prompt="Onde seria bom investir considerando meu perfil?">🎯 Onde investir?</button>
+            <button class="chat-chip" data-prompt="Explique a diferença entre CDI, Selic, Tesouro Direto e CDB">📚 Educação financeira</button>
+        </div>
+
+        <div class="chat-input-bar">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Pergunte sobre suas finanças..." autocomplete="off">
+            <button class="chat-send" id="chatSend" title="Enviar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Supabase, Chart JS, jsPDF -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="utils.js?v=1"></script>
+    <script src="config.js?v=4"></script>
+    <script src="app.js?v=4"></script>
+    <script src="market.js?v=4"></script>
+    <script src="chatbot.js?v=4"></script>
+</body>
+
+</html>

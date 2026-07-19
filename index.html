@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=12">
     <link rel="manifest" href="manifest.json">
 </head>
 
@@ -723,280 +723,382 @@
 
         <!-- View: Configurações -->
         <section class="view" id="view-settings">
-            <div class="settings-page">
-                <div class="settings-page-header">
-                    <h2>Configurações</h2>
-                    <p>Gerencie suas preferências, formato de dados e aparência do app.</p>
-                </div>
+            <div class="settings-layout">
+                
+                <!-- Sidebar de Abas -->
+                <aside class="settings-sidebar">
+                    <div class="settings-sidebar-header">
+                        <h2>Configurações</h2>
+                    </div>
+                    <nav class="settings-tabs">
+                        <button type="button" class="tab-btn active" data-tab="conta">👤 Conta</button>
+                        <button type="button" class="tab-btn" data-tab="financeiro">💰 Financeiro</button>
+                        <button type="button" class="tab-btn" data-tab="aparencia">🎨 Aparência</button>
+                        <button type="button" class="tab-btn" data-tab="preferencias">🔔 Preferências</button>
+                        <button type="button" class="tab-btn" data-tab="categorias">🏷️ Categorias</button>
+                        <button type="button" class="tab-btn" data-tab="atalhos">⌨️ Atalhos</button>
+                        <button type="button" class="tab-btn" data-tab="dados">💾 Dados</button>
+                    </nav>
+                </aside>
 
-                <form id="formSettings" class="settings-form">
-
-                    <!-- ─── Perfil ─── -->
-                    <div class="settings-section">
-                        <div class="settings-section-title">
-                            <span class="settings-section-icon">👤</span>
-                            <h3>Perfil</h3>
+                <!-- Conteúdo Principal -->
+                <div class="settings-main">
+                    
+                    <!-- Topbar com Busca -->
+                    <div class="settings-topbar">
+                        <div class="settings-search-wrapper">
+                            <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="settingsSearch" placeholder="Buscar configuração..." class="settings-search-input">
                         </div>
-                        <div class="settings-group">
-                            <div class="s-row">
-                                <div class="s-label">
-                                    <span class="s-title">Seu Nome</span>
-                                    <span class="s-desc">Aparece na saudação do topo (ex: Bom dia, João)</span>
-                                </div>
-                                <div class="s-field s-field--md">
-                                    <input type="text" id="settingsNome" class="input-field" placeholder="Ex: João">
-                                </div>
-                            </div>
-                            <div class="s-row">
-                                <div class="s-label">
-                                    <span class="s-title">Email da Conta</span>
-                                </div>
-                                <div class="s-field s-field--md">
-                                    <input type="text" id="settingsEmail" class="input-field" disabled value="Carregando...">
-                                </div>
-                            </div>
-                            <div class="s-row s-row--last">
-                                <div class="s-label">
-                                    <span class="s-title">Sessão</span>
-                                    <span class="s-desc">Desconecte sua conta deste dispositivo.</span>
-                                </div>
-                                <div class="s-field s-field--auto">
-                                    <button type="button" class="btn-danger-outline btn-sm" id="btnSettingsLogout">Sair da Conta</button>
-                                </div>
-                            </div>
+                        <div class="settings-autosave-indicator" id="autosaveIndicator">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Salvo</span>
                         </div>
                     </div>
 
-                    <!-- ─── Financeiro ─── -->
-                    <div class="settings-section">
-                        <div class="settings-section-title">
-                            <span class="settings-section-icon">💰</span>
-                            <h3>Financeiro</h3>
-                        </div>
-                        <div class="settings-group">
-                            <div class="s-row">
-                                <div class="s-label">
-                                    <span class="s-title">Saldo Inicial (R$)</span>
-                                    <span class="s-desc">Valor que você já tinha antes de usar o app.</span>
-                                </div>
-                                <div class="s-field s-field--sm">
-                                    <input type="number" id="settingsSaldoInicial" class="input-field" step="0.01" placeholder="0,00">
-                                </div>
-                            </div>
-                            <div class="s-row">
-                                <div class="s-label">
-                                    <span class="s-title">Dia de Fechamento</span>
-                                    <span class="s-desc">Define quando seu 'mês financeiro' começa.</span>
-                                </div>
-                                <div class="s-field s-field--xs">
-                                    <select id="settingsDiaFechamento" class="select-field">
-                                        <option value="1">Dia 1</option>
-                                        <option value="5">Dia 5</option>
-                                        <option value="10">Dia 10</option>
-                                        <option value="15">Dia 15</option>
-                                        <option value="20">Dia 20</option>
-                                        <option value="25">Dia 25</option>
-                                        <option value="28">Dia 28</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="s-row s-row--last">
-                                <div class="s-label">
-                                    <span class="s-title">Meta de Economia Mensal (R$)</span>
-                                    <span class="s-desc">Quanto quer economizar por mês. Exibe uma barra no Dashboard.</span>
-                                </div>
-                                <div class="s-field s-field--sm">
-                                    <input type="number" id="settingsMetaEconomia" class="input-field" step="0.01" placeholder="0,00">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Formulário Contêiner -->
+                    <form id="formSettings" class="settings-form-container">
 
-                    <!-- ─── Notificações e Preferências ─── -->
-                    <div class="settings-section">
-                        <div class="settings-section-title">
-                            <span class="settings-section-icon">🔔</span>
-                            <h3>Notificações e Preferências</h3>
-                        </div>
-                        <div class="settings-group">
-                            <div class="s-row">
-                                <div class="s-label">
-                                    <span class="s-title">Avisar recorrentes</span>
-                                    <span class="s-desc">Quantos dias antes do vencimento o alerta aparece.</span>
+                        <!-- =================== TAB: CONTA =================== -->
+                        <div class="settings-tab-content active" id="tab-conta">
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Informações Pessoais</h3>
                                 </div>
-                                <div class="s-field s-field--xs">
-                                    <input type="number" id="settingsAlertDays" class="input-field" min="1" max="15" value="5">
-                                </div>
-                            </div>
-                            <div class="s-row">
-                                <div class="s-label">
-                                    <span class="s-title">Formato de Data</span>
-                                    <span class="s-desc">Como as datas são exibidas. <span id="settingsDatePreview" class="preview-text"></span></span>
-                                </div>
-                                <div class="s-field s-field--xs">
-                                    <select id="settingsDateFormat" class="select-field">
-                                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                                    </select>
+                                <div class="settings-group">
+                                    <div class="s-row" data-keywords="nome perfil usuario identificacao">
+                                        <div class="s-label">
+                                            <span class="s-title">Seu Nome</span>
+                                            <span class="s-desc">Aparece na saudação do topo (ex: Bom dia, João)</span>
+                                        </div>
+                                        <div class="s-field s-field--md">
+                                            <input type="text" id="settingsNome" class="input-field" placeholder="Ex: João">
+                                        </div>
+                                    </div>
+                                    <div class="s-row s-row--last" data-keywords="email login endereço">
+                                        <div class="s-label">
+                                            <span class="s-title">Email da Conta</span>
+                                        </div>
+                                        <div class="s-field s-field--md">
+                                            <input type="text" id="settingsEmail" class="input-field" disabled value="Carregando...">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="s-row s-row--last s-row--col">
-                                <div class="s-label">
-                                    <span class="s-title">Ocultar seções do Dashboard</span>
-                                    <span class="s-desc">Esconda seções que você não utiliza para uma visão mais limpa.</span>
-                                </div>
-                                <div class="s-toggles">
-                                    <label class="s-toggle">
-                                        <input type="checkbox" id="hideInvestimentos" class="toggle-switch">
-                                        <span class="slider"></span>
-                                        <span>Investimentos</span>
-                                    </label>
-                                    <label class="s-toggle">
-                                        <input type="checkbox" id="hidePoupanca" class="toggle-switch">
-                                        <span class="slider"></span>
-                                        <span>Poupanças</span>
-                                    </label>
-                                    <label class="s-toggle">
-                                        <input type="checkbox" id="hideRadar" class="toggle-switch">
-                                        <span class="slider"></span>
-                                        <span>Radar</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- ─── Categorias Personalizadas ─── -->
-                    <div class="settings-section">
-                        <div class="settings-section-title">
-                            <span class="settings-section-icon">🏷️</span>
-                            <h3>Categorias Personalizadas</h3>
-                        </div>
-                        <div class="settings-group">
-                            <div class="s-row s-row--col">
-                                <div class="s-label">
-                                    <span class="s-title">Categorias de Receita</span>
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Segurança</h3>
                                 </div>
-                                <div class="s-cat-row">
-                                    <input type="text" id="newCatReceitaInput" class="input-field" placeholder="Nova categoria de receita">
-                                    <button type="button" class="btn-accent-sm" id="btnAddCatReceita">+</button>
+                                <div class="settings-group">
+                                    <div class="s-row" data-keywords="senha password alterar mudar">
+                                        <div class="s-label">
+                                            <span class="s-title">Trocar Senha</span>
+                                            <span class="s-desc">Atualize a senha de acesso da sua conta.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <button type="button" class="btn-secondary btn-sm" id="btnChangePassword" disabled title="Em breve">Alterar Senha</button>
+                                        </div>
+                                    </div>
+                                    <div class="s-row s-row--last" data-keywords="2fa autenticacao dois fatores celular">
+                                        <div class="s-label">
+                                            <span class="s-title">Autenticação 2 Fatores (2FA)</span>
+                                            <span class="s-desc">Adicione uma camada extra de segurança.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <button type="button" class="btn-secondary btn-sm" disabled title="Em breve">Configurar</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="listCatReceita" class="tag-list"></div>
                             </div>
-                            <div class="s-row s-row--last s-row--col">
-                                <div class="s-label">
-                                    <span class="s-title">Categorias de Despesa</span>
-                                </div>
-                                <div class="s-cat-row">
-                                    <input type="text" id="newCatDespesaInput" class="input-field" placeholder="Nova categoria de despesa">
-                                    <button type="button" class="btn-accent-sm" id="btnAddCatDespesa">+</button>
-                                </div>
-                                <div id="listCatDespesa" class="tag-list"></div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- ─── Aparência ─── -->
-                    <div class="settings-section">
-                        <div class="settings-section-title">
-                            <span class="settings-section-icon">🎨</span>
-                            <h3>Aparência</h3>
-                        </div>
-                        <div class="settings-group">
-                            <div class="s-row s-row--last">
-                                <div class="s-label">
-                                    <span class="s-title">Cor de Acento</span>
-                                    <span class="s-desc">Muda a cor principal dos botões e destaques.</span>
+                            <!-- Danger Zone (Conta) -->
+                            <div class="settings-section danger-zone mt-4">
+                                <div class="settings-section-title danger-title">
+                                    <h3>Zona de Perigo</h3>
                                 </div>
-                                <div class="s-field s-field--auto">
-                                    <div class="color-swatches" id="colorSwatchesContainer">
-                                        <button type="button" class="color-swatch active" data-color="#40C4FF" style="--swatch-color: #40C4FF;" title="Azul (Padrão)"></button>
-                                        <button type="button" class="color-swatch" data-color="#4CAF50" style="--swatch-color: #4CAF50;" title="Verde"></button>
-                                        <button type="button" class="color-swatch" data-color="#FF6B6B" style="--swatch-color: #FF6B6B;" title="Coral"></button>
-                                        <button type="button" class="color-swatch" data-color="#A78BFA" style="--swatch-color: #A78BFA;" title="Roxo"></button>
-                                        <button type="button" class="color-swatch" data-color="#F59E0B" style="--swatch-color: #F59E0B;" title="Âmbar"></button>
-                                        <button type="button" class="color-swatch" data-color="#14B8A6" style="--swatch-color: #14B8A6;" title="Teal"></button>
+                                <div class="settings-group danger-group">
+                                    <div class="s-row" data-keywords="sair logout desconectar sessao">
+                                        <div class="s-label">
+                                            <span class="s-title text-danger">Sair da Conta</span>
+                                            <span class="s-desc">Encerra sua sessão neste dispositivo atual.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <button type="button" class="btn-danger-outline btn-sm btn-confirmable" id="btnSettingsLogout" data-confirm="Tem certeza?">Sair da Conta</button>
+                                        </div>
+                                    </div>
+                                    <div class="s-row s-row--last" data-keywords="excluir apagar deletar conta">
+                                        <div class="s-label">
+                                            <span class="s-title text-danger">Excluir Conta</span>
+                                            <span class="s-desc">Apaga permanentemente todos os seus dados.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <button type="button" class="btn-danger-outline btn-sm btn-confirmable" id="btnDeleteAccount" data-confirm="Tem certeza?" disabled title="Em breve">Excluir Conta</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- ─── Atalhos de Teclado ─── -->
-                    <div class="settings-section">
-                        <div class="settings-section-title">
-                            <span class="settings-section-icon">⌨️</span>
-                            <h3>Atalhos de Teclado</h3>
-                        </div>
-                        <div class="settings-group">
-                            <div class="s-row">
-                                <div class="s-label">
-                                    <span class="s-title">Habilitar atalhos globais</span>
-                                    <span class="s-desc">Permite usar o teclado para navegar rapidamente pelo app.</span>
+                        <!-- =================== TAB: FINANCEIRO =================== -->
+                        <div class="settings-tab-content" id="tab-financeiro">
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Definições Base</h3>
                                 </div>
-                                <div class="s-field s-field--auto">
-                                    <label class="s-toggle" style="padding:0; background:none; border:none;">
-                                        <input type="checkbox" id="settingsEnableShortcuts" class="toggle-switch" checked>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="s-row s-row--last s-row--col">
-                                <div class="s-shortcuts">
-                                    <table class="shortcuts-table">
-                                        <tr><td><kbd>N</kbd></td><td>Nova Transação</td></tr>
-                                        <tr><td><kbd>D</kbd></td><td>Dashboard</td></tr>
-                                        <tr><td><kbd>T</kbd></td><td>Transações</td></tr>
-                                        <tr><td><kbd>R</kbd></td><td>Recorrentes</td></tr>
-                                        <tr><td><kbd>I</kbd></td><td>Investimentos</td></tr>
-                                        <tr><td><kbd>S</kbd></td><td>Configurações</td></tr>
-                                        <tr><td><kbd>Esc</kbd></td><td>Fechar Modal</td></tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ─── Dados e Sistema ─── -->
-                    <div class="settings-section">
-                        <div class="settings-section-title">
-                            <span class="settings-section-icon">💾</span>
-                            <h3>Dados e Sistema</h3>
-                        </div>
-                        <div class="settings-group">
-                            <div class="s-row s-row--last">
-                                <div class="s-data-actions">
-                                    <button type="button" class="btn-secondary" id="btnExportJson">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                        Exportar Backup
-                                    </button>
-                                    <label class="btn-secondary settings-import-btn">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                                        Importar JSON
-                                        <input type="file" id="btnImportJson" accept=".json" style="display:none;">
-                                    </label>
-                                    <button type="button" class="btn-danger-outline btn-sm" id="btnClearCache">Limpar Cache</button>
-                                </div>
-                                <div class="s-version">
-                                    Porquim v1.1.0 — Modificado com IA.<br>
-                                    ✅ Chaves de API protegidas via Edge Functions.
+                                <div class="settings-group">
+                                    <div class="s-row" data-keywords="saldo inicial valor começo dinheiro">
+                                        <div class="s-label">
+                                            <span class="s-title">Saldo Inicial (R$)</span>
+                                            <span class="s-desc">Valor que você já tinha antes de usar o app.</span>
+                                        </div>
+                                        <div class="s-field s-field--sm">
+                                            <input type="number" id="settingsSaldoInicial" class="input-field" step="0.01" placeholder="0,00">
+                                        </div>
+                                    </div>
+                                    <div class="s-row" data-keywords="dia fechamento mes fatura ciclo">
+                                        <div class="s-label">
+                                            <span class="s-title">Dia de Fechamento</span>
+                                            <span class="s-desc">Define quando seu 'mês financeiro' começa.</span>
+                                        </div>
+                                        <div class="s-field s-field--xs">
+                                            <select id="settingsDiaFechamento" class="select-field">
+                                                <option value="1">Dia 1</option>
+                                                <option value="5">Dia 5</option>
+                                                <option value="10">Dia 10</option>
+                                                <option value="15">Dia 15</option>
+                                                <option value="20">Dia 20</option>
+                                                <option value="25">Dia 25</option>
+                                                <option value="28">Dia 28</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="s-row s-row--last" data-keywords="meta economia poupanca alvo objetivo">
+                                        <div class="s-label">
+                                            <span class="s-title">Meta de Economia Mensal (R$)</span>
+                                            <span class="s-desc">Quanto quer economizar por mês. Exibe uma barra no Dashboard.</span>
+                                        </div>
+                                        <div class="s-field s-field--sm">
+                                            <input type="number" id="settingsMetaEconomia" class="input-field" step="0.01" placeholder="0,00">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Sticky Save Bar -->
-                    <div class="settings-save-bar">
-                        <button type="submit" class="btn-primary btn-save-settings" id="btnSaveSettingsSubmit">
-                            <span class="save-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                            </span>
-                            <span class="save-text">Salvar Configurações</span>
-                            <span class="badge-pending" id="badgePendingSettings" style="display: none;">● Pendente</span>
-                        </button>
-                    </div>
+                        <!-- =================== TAB: APARÊNCIA =================== -->
+                        <div class="settings-tab-content" id="tab-aparencia">
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Personalização Visual</h3>
+                                </div>
+                                <div class="settings-group">
+                                    <div class="s-row s-row--last" data-keywords="cor acento tema visual cores">
+                                        <div class="s-label">
+                                            <span class="s-title">Cor de Acento</span>
+                                            <span class="s-desc">Muda a cor principal dos botões e destaques.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <div class="color-swatches" id="colorSwatchesContainer">
+                                                <button type="button" class="color-swatch active" data-color="#40C4FF" style="--swatch-color: #40C4FF;" title="Azul (Padrão)"></button>
+                                                <button type="button" class="color-swatch" data-color="#4CAF50" style="--swatch-color: #4CAF50;" title="Verde"></button>
+                                                <button type="button" class="color-swatch" data-color="#FF6B6B" style="--swatch-color: #FF6B6B;" title="Coral"></button>
+                                                <button type="button" class="color-swatch" data-color="#A78BFA" style="--swatch-color: #A78BFA;" title="Roxo"></button>
+                                                <button type="button" class="color-swatch" data-color="#F59E0B" style="--swatch-color: #F59E0B;" title="Âmbar"></button>
+                                                <button type="button" class="color-swatch" data-color="#14B8A6" style="--swatch-color: #14B8A6;" title="Teal"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                </form>
+                        <!-- =================== TAB: PREFERÊNCIAS =================== -->
+                        <div class="settings-tab-content" id="tab-preferencias">
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Notificações & Formatos</h3>
+                                </div>
+                                <div class="settings-group">
+                                    <div class="s-row" data-keywords="avisar recorrentes alerta dias vencimento">
+                                        <div class="s-label">
+                                            <span class="s-title">Avisar recorrentes</span>
+                                            <span class="s-desc">Quantos dias antes do vencimento o alerta aparece.</span>
+                                        </div>
+                                        <div class="s-field s-field--xs">
+                                            <input type="number" id="settingsAlertDays" class="input-field" min="1" max="15" value="5">
+                                        </div>
+                                    </div>
+                                    <div class="s-row s-row--last" data-keywords="formato data calendario dia mes ano">
+                                        <div class="s-label">
+                                            <span class="s-title">Formato de Data</span>
+                                            <span class="s-desc">Como as datas são exibidas. <span id="settingsDatePreview" class="preview-text"></span></span>
+                                        </div>
+                                        <div class="s-field s-field--xs">
+                                            <select id="settingsDateFormat" class="select-field">
+                                                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings-section mt-4">
+                                <div class="settings-section-title">
+                                    <h3>Dashboard</h3>
+                                </div>
+                                <div class="settings-group">
+                                    <div class="s-row s-row--last s-row--col" data-keywords="ocultar secoes esconder investimentos radar poupanca">
+                                        <div class="s-label">
+                                            <span class="s-title">Ocultar seções do Dashboard</span>
+                                            <span class="s-desc">Esconda seções que você não utiliza para uma visão mais limpa.</span>
+                                        </div>
+                                        <div class="s-toggles">
+                                            <label class="s-toggle">
+                                                <input type="checkbox" id="hideInvestimentos" class="toggle-switch">
+                                                <span class="slider"></span>
+                                                <span>Investimentos</span>
+                                            </label>
+                                            <label class="s-toggle">
+                                                <input type="checkbox" id="hidePoupanca" class="toggle-switch">
+                                                <span class="slider"></span>
+                                                <span>Poupanças</span>
+                                            </label>
+                                            <label class="s-toggle">
+                                                <input type="checkbox" id="hideRadar" class="toggle-switch">
+                                                <span class="slider"></span>
+                                                <span>Radar</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- =================== TAB: CATEGORIAS =================== -->
+                        <div class="settings-tab-content" id="tab-categorias">
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Tags e Organização</h3>
+                                </div>
+                                <div class="settings-group">
+                                    <div class="s-row s-row--col" data-keywords="categorias receita ganhos criar adicionar">
+                                        <div class="s-label">
+                                            <span class="s-title">Categorias de Receita</span>
+                                        </div>
+                                        <div class="s-cat-row">
+                                            <input type="text" id="newCatReceitaInput" class="input-field" placeholder="Nova categoria de receita">
+                                            <button type="button" class="btn-accent-sm" id="btnAddCatReceita">+</button>
+                                        </div>
+                                        <div id="listCatReceita" class="tag-list"></div>
+                                    </div>
+                                    <div class="s-row s-row--last s-row--col" data-keywords="categorias despesa gastos criar adicionar">
+                                        <div class="s-label">
+                                            <span class="s-title">Categorias de Despesa</span>
+                                        </div>
+                                        <div class="s-cat-row">
+                                            <input type="text" id="newCatDespesaInput" class="input-field" placeholder="Nova categoria de despesa">
+                                            <button type="button" class="btn-accent-sm" id="btnAddCatDespesa">+</button>
+                                        </div>
+                                        <div id="listCatDespesa" class="tag-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- =================== TAB: ATALHOS =================== -->
+                        <div class="settings-tab-content" id="tab-atalhos">
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Produtividade</h3>
+                                </div>
+                                <div class="settings-group">
+                                    <div class="s-row" data-keywords="atalhos teclado hotkeys ativar habilitar">
+                                        <div class="s-label">
+                                            <span class="s-title">Habilitar atalhos globais</span>
+                                            <span class="s-desc">Permite usar o teclado para navegar rapidamente pelo app.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <label class="s-toggle" style="padding:0; background:none; border:none;">
+                                                <input type="checkbox" id="settingsEnableShortcuts" class="toggle-switch" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="s-row s-row--last s-row--col" data-keywords="atalhos tabela teclas n d t r i s esc">
+                                        <div class="s-shortcuts">
+                                            <table class="shortcuts-table">
+                                                <tr><td><kbd>N</kbd></td><td>Nova Transação</td></tr>
+                                                <tr><td><kbd>D</kbd></td><td>Dashboard</td></tr>
+                                                <tr><td><kbd>T</kbd></td><td>Transações</td></tr>
+                                                <tr><td><kbd>R</kbd></td><td>Recorrentes</td></tr>
+                                                <tr><td><kbd>I</kbd></td><td>Investimentos</td></tr>
+                                                <tr><td><kbd>S</kbd></td><td>Configurações</td></tr>
+                                                <tr><td><kbd>Esc</kbd></td><td>Fechar Modal</td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- =================== TAB: DADOS =================== -->
+                        <div class="settings-tab-content" id="tab-dados">
+                            <div class="settings-section">
+                                <div class="settings-section-title">
+                                    <h3>Exportação</h3>
+                                </div>
+                                <div class="settings-group">
+                                    <div class="s-row s-row--last" data-keywords="exportar backup json salvar dados">
+                                        <div class="s-label">
+                                            <span class="s-title">Exportar Dados</span>
+                                            <span class="s-desc">Baixe todas as suas transações e configurações em um arquivo JSON.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <button type="button" class="btn-secondary" id="btnExportJson">Exportar Backup</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-section danger-zone mt-4">
+                                <div class="settings-section-title danger-title">
+                                    <h3>Zona de Perigo (Dados)</h3>
+                                </div>
+                                <div class="settings-group danger-group">
+                                    <div class="s-row" data-keywords="importar json sobrescrever restaurar">
+                                        <div class="s-label">
+                                            <span class="s-title text-danger">Importar JSON</span>
+                                            <span class="s-desc">Atenção: Sobrescreve TODOS os seus dados atuais.</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <label class="btn-danger-outline btn-sm settings-import-btn" style="cursor:pointer">
+                                                Importar Backup
+                                                <input type="file" id="btnImportJson" accept=".json" style="display:none;">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="s-row s-row--last" data-keywords="limpar cache resetar zerar dados">
+                                        <div class="s-label">
+                                            <span class="s-title text-danger">Limpar Cache Local</span>
+                                            <span class="s-desc">Remove todos os dados cacheados no navegador (não apaga dados da nuvem).</span>
+                                        </div>
+                                        <div class="s-field s-field--auto">
+                                            <button type="button" class="btn-danger-outline btn-sm btn-confirmable" id="btnClearCache" data-confirm="Tem certeza?">Limpar Cache</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="s-version mt-4">
+                                Porquim v1.2.0 — Modificado com IA.<br>
+                                ✅ Auto-save ativado
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </section>
 
@@ -1808,11 +1910,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-    <script src="utils.js?v=1"></script>
-    <script src="config.js?v=4"></script>
-    <script src="app.js?v=4"></script>
-    <script src="market.js?v=4"></script>
-    <script src="chatbot.js?v=4"></script>
+    <script src="utils.js?v=5"></script>
+    <script src="config.js?v=5"></script>
+    <script src="app.js?v=5"></script>
+    <script src="market.js?v=5"></script>
+    <script src="chatbot.js?v=5"></script>
 </body>
 
 </html>

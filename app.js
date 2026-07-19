@@ -823,17 +823,17 @@
         const patrimonio = saldo + totalGuardado + totalInvestido;
 
         // Update Dashboard Main Numbers
-        $('#dashSaldo').textContent = formatCurrency(saldo);
-        $('#dashReceita').textContent = formatCurrency(totalReceita);
-        $('#dashDespesa').textContent = formatCurrency(totalDespesa);
-        $('#dashPoupanca').textContent = formatCurrency(totalGuardado);
-        $('#dashInvestido').textContent = formatCurrency(totalInvestido);
-        $('#dashPatrimonio').textContent = formatCurrency(patrimonio);
+        if ($('#saldoAtual')) $('#saldoAtual').textContent = formatCurrency(saldo);
+        if ($('#receitaMes')) $('#receitaMes').textContent = formatCurrency(totalReceita);
+        if ($('#despesaMes')) $('#despesaMes').textContent = formatCurrency(totalDespesa);
+        if ($('#totalGuardado')) $('#totalGuardado').textContent = formatCurrency(totalGuardado);
+        if ($('#totalInvestido')) $('#totalInvestido').textContent = formatCurrency(totalInvestido);
+        if ($('#patrimonioTotal')) $('#patrimonioTotal').textContent = formatCurrency(patrimonio);
         
         // Hide sections based on user settings
-        const cardInvestimentos = $('#dashInvestido').closest('.card');
-        const cardPoupanca = $('#dashPoupanca').closest('.card');
-        const cardPatrimonio = $('#dashPatrimonio').closest('.card');
+        const cardInvestimentos = $('#totalInvestido')?.closest('.card');
+        const cardPoupanca = $('#totalGuardado')?.closest('.card');
+        const cardPatrimonio = $('#patrimonioTotal')?.closest('.card');
         
         if (cardInvestimentos) cardInvestimentos.style.display = userSettings.hideInvestimentos ? 'none' : 'block';
         if (cardPoupanca) cardPoupanca.style.display = userSettings.hidePoupanca ? 'none' : 'block';
@@ -2009,14 +2009,84 @@
         if (typeof populateCategorySelects === 'function') populateCategorySelects();
     };
 
-    $('#formSettings').addEventListener('submit', (e) => {
-        e.preventDefault();
+    // =========================================
+    // SETTINGS LOGIC (Tabs, Search, Auto-save)
+    // =========================================
+    
+    // 1. Controle das Abas (Tabs)
+    function initSettingsTabs() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.settings-tab-content');
         
-        const btn = $('#btnSaveSettingsSubmit');
-        const originalText = btn.querySelector('.save-text').textContent;
-        const icon = btn.querySelector('.save-icon');
-        const badge = $('#badgePendingSettings');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = `tab-${btn.dataset.tab}`;
+                
+                // Remove active de tudo
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Adiciona active no clicado
+                btn.classList.add('active');
+                const target = document.getElementById(targetId);
+                if (target) target.classList.add('active');
+                
+                // Limpa a busca ao trocar de aba (opcional)
+                const searchInput = $('#settingsSearch');
+                if (searchInput && searchInput.value) {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input'));
+                }
+            });
+        });
+    }
+
+    // 2. Busca e Filtro
+    function initSettingsSearch() {
+        const searchInput = $('#settingsSearch');
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const rows = document.querySelectorAll('.s-row');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const keywords = (row.dataset.keywords || '').toLowerCase();
+                
+                if (!term || text.includes(term) || keywords.includes(term)) {
+                    row.style.display = '';
+                    if (term) row.classList.add('search-highlight');
+                    else row.classList.remove('search-highlight');
+                } else {
+                    row.style.display = 'none';
+                    row.classList.remove('search-highlight');
+                }
+            });
+        });
+    }
+
+    // 3. Auto-Save com Debounce
+    let autoSaveTimeout = null;
+    function triggerAutoSave() {
+        clearTimeout(autoSaveTimeout);
         
+        const indicator = $('#autosaveIndicator');
+        if (indicator) {
+            indicator.querySelector('span').textContent = 'Salvando...';
+            indicator.querySelector('svg').innerHTML = '<circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-dashoffset="31.4" opacity="0.3"></circle>';
+            indicator.classList.add('show');
+            indicator.style.color = 'var(--light-gray)';
+            indicator.style.background = 'rgba(255,255,255,0.1)';
+        }
+
+        autoSaveTimeout = setTimeout(() => {
+            saveCurrentSettings();
+        }, 1000); // 1s debounce
+    }
+
+    function saveCurrentSettings() {
+        // Coleta os valores
         userSettings.nome = $('#settingsNome').value.trim();
         userSettings.saldoInicial = parseFloat($('#settingsSaldoInicial').value) || 0;
         userSettings.diaFechamento = parseInt($('#settingsDiaFechamento').value) || 1;
@@ -2038,24 +2108,78 @@
         }
         
         saveSettings();
-        
         updateGreeting();
         refreshDashboard();
         if (typeof populateCategorySelects === 'function') populateCategorySelects();
         
-        // Button Animation
-        btn.classList.add('saved');
-        btn.querySelector('.save-text').textContent = 'Salvo!';
-        icon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
-        if(badge) badge.style.display = 'none';
+        // Finaliza animação do auto-save
+        const indicator = $('#autosaveIndicator');
+        if (indicator) {
+            indicator.querySelector('span').textContent = 'Salvo';
+            indicator.querySelector('svg').innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+            indicator.style.color = '#4CAF50';
+            indicator.style.background = 'rgba(76, 175, 80, 0.15)';
+            
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2500); // esconde após 2.5s
+        }
+    }
+
+    function initAutoSaveListeners() {
+        const form = $('#formSettings');
+        if (!form) return;
         
-        showToast('Configurações salvas com sucesso!', 'success');
-        
-        setTimeout(() => {
-            btn.classList.remove('saved');
-            btn.querySelector('.save-text').textContent = originalText;
-            icon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>';
-        }, 1500);
+        // Remove comportamento padrao do submit (caso seja disparado por enter em algum input)
+        form.addEventListener('submit', (e) => e.preventDefault());
+
+        // Inputs de texto e number
+        form.querySelectorAll('input:not([type="checkbox"]):not([type="file"]), select').forEach(el => {
+            el.addEventListener('input', triggerAutoSave);
+        });
+
+        // Checkboxes e Swatches mudam instantaneamente, mas usamos debounce igual para não spammar localstorage
+        form.querySelectorAll('input[type="checkbox"]').forEach(el => {
+            el.addEventListener('change', triggerAutoSave);
+        });
+        document.querySelectorAll('.color-swatch').forEach(el => {
+            el.addEventListener('click', triggerAutoSave); // o listener visual principal já seta 'active'
+        });
+    }
+
+    // Botões Danger com Confirmação Inline
+    function initDangerButtons() {
+        document.querySelectorAll('.btn-confirmable').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (btn.classList.contains('confirming')) {
+                    // Confirmed (ação real executada pelo listener específico atrelado)
+                    btn.classList.remove('confirming');
+                    btn.textContent = btn.dataset.originalText || btn.textContent;
+                } else {
+                    e.preventDefault();
+                    e.stopImmediatePropagation(); // previne evento original
+                    btn.dataset.originalText = btn.textContent;
+                    btn.textContent = btn.dataset.confirm || 'Clique novamente';
+                    btn.classList.add('confirming');
+                    
+                    // Cancela se não confirmar em 3s
+                    setTimeout(() => {
+                        if (btn.classList.contains('confirming')) {
+                            btn.classList.remove('confirming');
+                            btn.textContent = btn.dataset.originalText;
+                        }
+                    }, 3000);
+                }
+            });
+        });
+    }
+
+    // Inicialização do Setup
+    document.addEventListener('DOMContentLoaded', () => {
+        initSettingsTabs();
+        initSettingsSearch();
+        initAutoSaveListeners();
+        initDangerButtons();
     });
 
     $('#btnAddCatReceita').addEventListener('click', () => {
@@ -2076,19 +2200,17 @@
         }
     });
 
-    $('#btnSettingsLogout').addEventListener('click', () => {
-        showConfirm('Tem certeza que deseja sair?', async () => {
-            await sbClient.auth.signOut();
-        });
+    $('#btnSettingsLogout').addEventListener('click', async (e) => {
+        if (!e.currentTarget.classList.contains('confirming')) return;
+        await sbClient.auth.signOut();
     });
 
-    $('#btnClearCache').addEventListener('click', () => {
-        showConfirm('Isso vai apagar dados cacheados como cotações e notícias. Continuar?', () => {
-            localStorage.removeItem('porcada_news_cache');
-            localStorage.removeItem('porcada_crypto_cache');
-            localStorage.removeItem('porcada_stock_cache');
-            showToast('Cache limpo.', 'success');
-        });
+    $('#btnClearCache').addEventListener('click', (e) => {
+        if (!e.currentTarget.classList.contains('confirming')) return;
+        localStorage.removeItem('porcada_news_cache');
+        localStorage.removeItem('porcada_crypto_cache');
+        localStorage.removeItem('porcada_stock_cache');
+        showToast('Cache limpo.', 'success');
     });
 
     // Settings Live Preview
@@ -2121,26 +2243,16 @@
     }
     $('#settingsDateFormat').addEventListener('change', updateDatePreview);
 
-    // Show pending badge on any change
-    $('#formSettings').addEventListener('input', () => {
-        const badge = $('#badgePendingSettings');
-        if (badge) badge.style.display = 'inline-block';
-    });
-    $('#formSettings').addEventListener('change', () => {
-        const badge = $('#badgePendingSettings');
-        if (badge) badge.style.display = 'inline-block';
-    });
+    // (The previous global form input listeners for pending badge were removed as we now use auto-save logic above)
 
-    // Color Swatches
+    // Color Swatches Live Preview Update
     document.querySelectorAll('.color-swatch').forEach(swatch => {
         swatch.addEventListener('click', (e) => {
             document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
             e.currentTarget.classList.add('active');
             const hex = e.currentTarget.dataset.color;
             applyAccentColor(hex); // Live preview
-            
-            const badge = $('#badgePendingSettings');
-            if (badge) badge.style.display = 'inline-block';
+            // Auto-save logic picks this up via the initAutoSaveListeners bind
         });
     });
 

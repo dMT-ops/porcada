@@ -1959,6 +1959,19 @@
     function populateSettingsForm() {
         $('#settingsNome').value = userSettings.nome || '';
         $('#settingsEmail').value = currentUser ? currentUser.email : '';
+        
+        // Populate Profile Header
+        if ($('#profileHeaderName')) {
+            $('#profileHeaderName').textContent = userSettings.nome || (currentUser ? currentUser.email.split('@')[0] : 'Usuário');
+        }
+        if ($('#profileHeaderEmail')) {
+            $('#profileHeaderEmail').textContent = currentUser ? currentUser.email : 'email@exemplo.com';
+        }
+        if ($('#profileHeaderInitial')) {
+            const nameInitial = userSettings.nome ? userSettings.nome.charAt(0) : (currentUser ? currentUser.email.charAt(0) : 'U');
+            $('#profileHeaderInitial').textContent = nameInitial.toUpperCase();
+        }
+
         $('#settingsSaldoInicial').value = userSettings.saldoInicial || '';
         $('#settingsDiaFechamento').value = userSettings.diaFechamento || 1;
         $('#settingsMetaEconomia').value = userSettings.metaEconomia || '';
@@ -2219,13 +2232,20 @@
         clearTimeout(greetingTimeout);
         greetingTimeout = setTimeout(() => {
             const h2 = $('#greeting');
+            const n = e.target.value.trim();
             if (h2) {
                 const hour = new Date().getHours();
                 let saudacao = 'Bom dia';
                 if (hour >= 12 && hour < 18) saudacao = 'Boa tarde';
                 else if (hour >= 18) saudacao = 'Boa noite';
-                const n = e.target.value.trim();
                 h2.textContent = n ? `${saudacao}, ${n}!` : `${saudacao}!`;
+            }
+            if ($('#profileHeaderName')) {
+                $('#profileHeaderName').textContent = n || (currentUser ? currentUser.email.split('@')[0] : 'Usuário');
+            }
+            if ($('#profileHeaderInitial')) {
+                const initial = n ? n.charAt(0) : (currentUser ? currentUser.email.charAt(0) : 'U');
+                $('#profileHeaderInitial').textContent = initial.toUpperCase();
             }
         }, 300);
     });
